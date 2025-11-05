@@ -1,5 +1,5 @@
 import { SequentialAgent } from "@iqai/adk";
-import { getBurnoutQuestionAgent } from "../question-agent/agent";
+import { getQuestionFromUserAgent } from "../question-agent/agent";
 import { getBurnoutAnalysisAgent } from "../analysis-agent/agent";
 import { getRecommendationAgent } from "../recommendation-agent/agent";
 
@@ -18,7 +18,7 @@ export const getMindProofPipelineAgent = () =>
       3️⃣ RecommendationAgent — returns an empathetic, actionable insight.
     `,
     subAgents: [
-      getBurnoutQuestionAgent(),
+      getQuestionFromUserAgent(),
       getBurnoutAnalysisAgent(),
       getRecommendationAgent(),
     ],

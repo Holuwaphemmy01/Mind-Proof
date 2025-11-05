@@ -3,25 +3,35 @@ import { env } from "../env";
 import { getMindProofPipelineAgent } from "./meta-agent/agent";
 
 /**
- * Creates and configures the root agent for the telegram bot.
+ * 🧠 Root Agent Configuration for MindProof
  *
- * This agent is responsible for handling every incoming telegram message received by the sampling handler.
- * It delegates tasks to sub-agents, specifically for telling jokes and providing weather information.
- * The root agent uses the "gemini-2.5-flash" model and maintains session state using a SQLite-backed session service.
+ * This is the main entry point for all Telegram interactions.
+ * It listens to incoming user messages and delegates tasks
+ * to the MindProofPipelineAgent — which handles:
+ *  1️⃣ Asking wellbeing-related questions
+ *  2️⃣ Analyzing responses for burnout or stress risk
+ *  3️⃣ Providing supportive, AI-generated recommendations
  *
- * @returns The fully constructed root agent instance, ready to process and route user requests to the appropriate sub-agent.
+ * The root agent runs on the configured model (from env.LLM_MODEL)
+ * and maintains session state for each user.
+ *
+ * Future extensions:
+ *  - Integrate blockchain logging for prediction transparency
+ *  - Add personalization and progress tracking
+ *
+ * @returns A fully constructed root agent instance ready to handle Telegram user interactions.
  */
 export const getRootAgent = () => {
-	const mindProofAgent = getMindProofPipelineAgent();
+  const mindProofAgent = getMindProofPipelineAgent();
 
-	return AgentBuilder.create("root_agent")
-		.withDescription(
-			"Root agent that delegates tasks to sub-agents for telling jokes and providing weather information.",
-		)
-		.withInstruction(
-			"Use the joke sub-agent for humor requests and the weather sub-agent for weather-related queries. Route user requests to the appropriate sub-agent.",
-		)
-		.withModel(env.LLM_MODEL)
-		.withSubAgents([mindProofAgent])
-		.build();
+  return AgentBuilder.create("root_agent")
+    .withDescription(
+      "Root agent that coordinates the entire MindProof AI flow — collecting responses, analyzing emotional health, and providing personalized recommendations."
+    )
+    .withInstruction(
+      "Delegate all mental wellbeing, burnout, or emotional health related tasks to the MindProof pipeline sub-agent. Respond to user inputs empathetically and guide them through the process."
+    )
+    .withModel(env.LLM_MODEL)
+    .withSubAgents([mindProofAgent])
+    .build();
 };
