@@ -38,18 +38,18 @@ export const getBurnoutQuestionAgent = () => {
       });
     }
 
-    protected async *runAsyncImpl(ctx: any) {
-      const state = ctx.session.state.get("burnout_info_state", "");
-      const isComplete = state.includes("INFO_COMPLETE");
+  //   protected async *runAsyncImpl(ctx: any) {
+  //     const state = ctx.session.state.get("burnout_info_state", "");
+  //     const isComplete = state.includes("INFO_COMPLETE");
 
-      yield new Event({
-        author: this.name,
-        actions: new EventActions({
-          escalate: isComplete, // Escalate when data collection is complete
-        }),
-      });
-    }
-  })();
+  //     yield new Event({
+  //       author: this.name,
+  //       actions: new EventActions({
+  //         escalate: isComplete, // Escalate when data collection is complete
+  //       }),
+  //     });
+  //   }
+   })();
 
   // 🔁 3️⃣ Loop Agent – Keeps Asking Until Complete
   const burnoutQuestionLoop = new LoopAgent({

@@ -1,7 +1,6 @@
 import { AgentBuilder } from "@iqai/adk";
 import { env } from "../env";
-import { getJokeAgent } from "./joke-agent/agent";
-import { getWeatherAgent } from "./weather-agent/agent";
+import { getMindProofPipelineAgent } from "./meta-agent/agent";
 
 /**
  * Creates and configures the root agent for the telegram bot.
@@ -13,8 +12,7 @@ import { getWeatherAgent } from "./weather-agent/agent";
  * @returns The fully constructed root agent instance, ready to process and route user requests to the appropriate sub-agent.
  */
 export const getRootAgent = () => {
-	const jokeAgent = getJokeAgent();
-	const weatherAgent = getWeatherAgent();
+	const mindProofAgent = getMindProofPipelineAgent();
 
 	return AgentBuilder.create("root_agent")
 		.withDescription(
@@ -24,6 +22,6 @@ export const getRootAgent = () => {
 			"Use the joke sub-agent for humor requests and the weather sub-agent for weather-related queries. Route user requests to the appropriate sub-agent.",
 		)
 		.withModel(env.LLM_MODEL)
-		.withSubAgents([jokeAgent, weatherAgent])
+		.withSubAgents([mindProofAgent])
 		.build();
 };
